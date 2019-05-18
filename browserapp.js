@@ -1,1 +1,6 @@
-alert( 'Hello, world!' );
+$("#test").click(
+  {
+    alert( 'Hello, world!' );
+  }
+);
+
