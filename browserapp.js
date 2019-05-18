@@ -1,6 +1,6 @@
 $("#test").click(
   {
-    alert( 'Hello, world!' );
+    document.getElementById("demo").innerHTML = "The test is successful!";
   }
 );
 
