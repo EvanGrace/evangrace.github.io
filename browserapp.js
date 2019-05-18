@@ -1,4 +1,4 @@
-$("#test").click(
+$("test").click(
     {console.log(5);}
      );
 
