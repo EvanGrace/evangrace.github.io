@@ -1,4 +1,3 @@
-$("test").click(
-    {document.write(5);}
-     );
-
+function test(){
+ console.log(5);   
+}
