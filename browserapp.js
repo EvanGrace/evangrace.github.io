@@ -1,4 +1,4 @@
 $("test").click(
-    {console.log(5);}
+    {document.write(5);}
      );
 
