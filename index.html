@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<title>BLE Test</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="browserapp.js"></script>
 	</head>
 	<body>
-    		<p>This is a paragraph.</p>
-		<input type="button" onclick="test()" value="Try the test. See what happens."/>
-		<p id="testId1">Try Try Try</p>
-		<p>This is a paragraph.</p>
-		<p>This is a paragraph.</p>
+    		<p>Testing the Web Bluetooth</p>
+		<div>
+			<button id="test">Test</button>
+		</div>
+		<div>
+			<p>Notified value: <span id="notifiedValue" style="font-size: xx-large;"></span></p>
+		</div>
 	</body>
-	<footer>
-	</footer>
 </html>
