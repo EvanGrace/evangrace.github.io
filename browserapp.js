@@ -5,9 +5,8 @@ $(function(){
 		name: ["MYDEVICE"]
 		}
 	],
-	optionalServices: ["00FF"] //Old one: 4fafc201-1fb5-459e-8fcc-c5c9c331914b
+	optionalServices: ["00FF"]
 	};
-	//Old Characteristic: beb5483e-36e1-4688-b7f5-ea07361b26a8
 
 	$("#test").click(() => {
 		console.log("Running BLE Code");
