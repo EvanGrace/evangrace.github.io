@@ -30,9 +30,28 @@ $(function(){
 			});
 		});
 	});
-
+	
 	$("#unpair").click(() => {
 		console.log("You clicked the Unpair button!!!!");
+		navigator.bluetooth.requestDevice(requestDeviceParms)
+			.then(device => {
+			device.gatt.connect()
+				.then(gattServer =>{
+				gattServer.getPrimaryService("2937aa48-6f5c-4778-9078-f804143a1c71")
+					.then(gattService=>{
+					gattService.getCharacteristic("58eabb08-ea2d-4606-a3ec-f6adefbf7cb2")
+						.then(gattCharacteristic=>{
+						gattCharacteristic.startNotifications()
+							.then(gattCharacteristic=>{
+							gattCharacteristic.addEventListener("characteristicvaluechanged", event=>{
+								var value = event.target.value.getUint8(0);
+								$("#notifiedValue").text("" + value);
+							});
+						});
+					});
+				});
+			});
+		});
 	});
 	
 });
