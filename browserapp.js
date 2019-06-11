@@ -45,7 +45,7 @@ $(function(){
 							.then(gattCharacteristic=>{
 							gattCharacteristic.addEventListener("characteristicvaluechanged", event=>{
 								var value = event.target.value.getUint8(0);
-								$("#notifiedValue").text("" + value);
+								$("#notifiedValue_2").text("" + value);
 							});
 						});
 					});
