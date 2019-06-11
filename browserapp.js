@@ -26,7 +26,7 @@ $(function(){
 		});
 	});
 
-	$("unpair").click(() => {
+	$("#unpair").click(() => {
 		console.log("You clicked the Unpair button!!!!");
 	});
 	
