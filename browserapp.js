@@ -5,15 +5,15 @@ $(function(){
 		name: ["AMCTestDevice"]
 		}
 	],
-	optionalServices: ["4fafc201-1fb5-459e-8fcc-c5c9c331914b"]
+	optionalServices: ["2937aa48-6f5c-4778-9078-f804143a1c71"]
 	};
 
 	$("#connect").click(() => {
 		console.log("Running BLE Code");
 		navigator.bluetooth.requestDevice(requestDeviceParms).then(device => {
 			device.gatt.connect().then(gattServer =>{
-				gattServer.getPrimaryService("4fafc201-1fb5-459e-8fcc-c5c9c331914b").then(gattService=>{
-					gattService.getCharacteristic("beb5483e-36e1-4688-b7f5-ea07361b26a8").then(gattCharacteristic=>{
+				gattServer.getPrimaryService("2937aa48-6f5c-4778-9078-f804143a1c71").then(gattService=>{
+					gattService.getCharacteristic("58eabb08-ea2d-4606-a3ec-f6adefbf7cb2").then(gattCharacteristic=>{
 						gattCharacteristic.startNotifications().then(gattCharacteristic=>{
 							gattCharacteristic.addEventListener("characteristicvaluechanged", event=>{
 								var value = event.target.value.getUint8(0);
