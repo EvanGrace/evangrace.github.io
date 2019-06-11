@@ -8,7 +8,7 @@ $(function(){
 	optionalServices: ["4fafc201-1fb5-459e-8fcc-c5c9c331914b"]
 	};
 
-	$("#test").click(() => {
+	$("#connect").click(() => {
 		console.log("Running BLE Code");
 		navigator.bluetooth.requestDevice(requestDeviceParms).then(device => {
 			device.gatt.connect().then(gattServer =>{
