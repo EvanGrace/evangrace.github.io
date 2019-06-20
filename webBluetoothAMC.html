@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Local Test</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="browserapp.js"></script>
+		<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+		<link rel="import" href="bower_components/platinum-bluetooth/platinum-bluetooth-elements.html">
+	</head>
+	<body>
+    		<p>Testing the Web Bluetooth</p>
+		<div>
+			<button id="pair">Pair Device</button>
+			<button id="read" value="0">Get Reading</button>
+			<button id="triggerOn">Turn LED On</button>
+			<button id="triggerOff">Turn LED Off</button>
+		</div>	
+		<div>
+			<p>Notified value: <span id="notifiedValue" style="font-size: xx-large;"></span></p>
+		</div>
+		<div>
+			<button id="read2" value="0">Get Reading - 2</button>
+			<button id="triggerOn2">Turn LED On - 2</button>
+			<button id="triggerOff2">Turn LED Off - 2</button>
+		</div>
+		<!-- Check out these sites for more information -->
+		<!--https://github.com/WebBluetoothCG/demos/blob/gh-pages/bluetooth-toy-plane/index.html-->
+		<!--https://github.com/googlearchive/platinum-bluetooth/blob/master/platinum-bluetooth-characteristic.html-->
+		<platinum-bluetooth-device id="test-device"
+		                           name-filter="AMCTestDevice">
+		    <platinum-bluetooth-service service="4fafc201-1fb5-459e-8fcc-c5c9c331914b">
+		    	<platinum-bluetooth-characteristic id="getDataCharacteristic"
+		    	                                   characteristic="beb5483e-36e1-4688-b7f5-ea07361b26a8"
+		    	                                   auto-write>
+		    	</platinum-bluetooth-characteristic>
+		    	<platinum-bluetooth-characteristic id="startMeasurementCharacteristic"
+		    	                                   characteristic="f9bf42c7-52a8-4b96-8f68-6a88326e1269"
+		    	                                   auto-write>
+		    	</platinum-bluetooth-characteristic>
+		    </platinum-bluetooth-service>
+		</platinum-bluetooth-device>
+
+		<platinum-bluetooth-device id="test-device2"
+		                           name-filter="AMCTestDevice">
+		    <platinum-bluetooth-service service="4fafc201-1fb5-459e-8fcc-c5c9c331914b">
+		    	<platinum-bluetooth-characteristic id="getDataCharacteristic2"
+		    	                                   characteristic="beb5483e-36e1-4688-b7f5-ea07361b26a9"
+		    	                                   auto-write>
+		    	</platinum-bluetooth-characteristic>
+		    	<platinum-bluetooth-characteristic id="startMeasurementCharacteristic2"
+		    	                                   characteristic="f9bf42c7-52a8-4b96-8f68-6a88326e1260"
+		    	                                   auto-write>
+		    	</platinum-bluetooth-characteristic>
+		    </platinum-bluetooth-service>
+		</platinum-bluetooth-device>
+
+		<script>
+			document.addEventListener('WebComponentsReady', function() {
+				// Buttons to interact with the bluetooth devices
+				var getData=document.querySelector('#read');
+				var triggerOn=document.querySelector('#triggerOn');
+				var triggerOff=document.querySelector('#triggerOff');
+
+				var getData2=document.querySelector('#read2');
+				var triggerOn2=document.querySelector('#triggerOn2');
+				var triggerOff2=document.querySelector('#triggerOff2');
+
+				// Characteristics of the AMC device
+				var testDevice=document.querySelector('#test-device');
+				var getDataCharacteristic=document.querySelector('#getDataCharacteristic');
+				var startMeasurementCharacteristic=document.querySelector('#startMeasurementCharacteristic');
+
+				var testDevice2=document.querySelector('#test-device2');
+				var getDataCharacteristic2=document.querySelector('#getDataCharacteristic2');
+				var startMeasurementCharacteristic2=document.querySelector('#startMeasurementCharacteristic2');
+
+				function handleError(error) {
+					console.log(error);
+				}
+
+				// Get data from the ESP
+				getData.addEventListener('click', function() {
+					testDevice.request().then(function() {
+						console.log("Device request successful");
+						return getDataCharacteristic.read().then(function(value) {
+							console.log("Value: " + value.getUint8(0));
+							$("#notifiedValue").text("" + value.getUint8(0));
+						});
+						//console.log(theData);
+						//
+					}).catch(handleError);
+				});
+
+				getData2.addEventListener('click', function() {
+					testDevice2.request().then(function() {
+						console.log("Device request successful");
+						return getDataCharacteristic2.read().then(function(value) {
+							console.log("Value: " + value.getUint8(0));
+							//$("#notifiedValue").text("" + value.getUint8(0));
+						});
+						//console.log(theData);
+						//
+					}).catch(handleError);
+				});
+
+				// Send data to the ESP
+				triggerOn.addEventListener('click', function() {
+					testDevice.request().then(function() {
+						let ledOn = new Uint8Array([1]);
+						return startMeasurementCharacteristic.write(ledOn).then(function () {
+							console.log("triggerOn Sent!");
+						});
+
+					}).catch(handleError);
+				});
+
+				triggerOn2.addEventListener('click', function() {
+					testDevice2.request().then(function() {
+						let ledOn = new Uint8Array([1]);
+						return startMeasurementCharacteristic2.write(ledOn).then(function () {
+							console.log("triggerOn2 Sent!");
+						});
+
+					}).catch(handleError);
+				});
+
+				triggerOff.addEventListener('click', function() {
+					testDevice.request().then(function() {
+						let ledOn = new Uint8Array([0]);
+						return startMeasurementCharacteristic.write(ledOn).then(function () {
+							console.log("triggerOff Sent!");
+						});
+
+					}).catch(handleError);
+				});
+
+				triggerOff2.addEventListener('click', function() {
+					testDevice2.request().then(function() {
+						let ledOn = new Uint8Array([0]);
+						return startMeasurementCharacteristic2.write(ledOn).then(function () {
+							console.log("triggerOff2 Sent!");
+						});
+
+					}).catch(handleError);
+				});
+
+			});
+		</script>
+
+	</body>
+</html>
